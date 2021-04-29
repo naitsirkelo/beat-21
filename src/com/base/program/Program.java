@@ -6,24 +6,29 @@ import com.base.util.Calculations;
 import com.base.util.Const;
 import com.base.util.Print;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Program {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
-        boolean runGame = true;
         String winner = "";
 
         List<Card> handSam = new ArrayList<>();
         List<Card> handDealer = new ArrayList<>();
 
-        String fileName = "";
+        /**
+         * TODO: CLI navn på fil.
+         *
+         * TODO: JavaDoc
+         */
 
-        // check fileName opp mot args for CLI input.
+        System.out.println(args[0]);
 
         // ANTAGELSE: "taking the reference to the file" = referanse til navn på fil i resources og ikke path
+        String fileName = "cardFile_test.txt";
 
         Deck deck;
         if (fileName.length() > 0) {

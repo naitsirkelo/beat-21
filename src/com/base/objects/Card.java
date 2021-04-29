@@ -10,12 +10,12 @@ public class Card {
 
     public Card(int v, int s) {
 
-        if (v == 1) {
-            score = 11;
+        if (v == Const.ACE) {
+            score = Const.ACE_SCORE;
             shortName = Const.SUITS_SHORT[s-1] + Const.VALUE_NAMES[v-1];
         }
-        else if (v > 10) {
-            score = 10;
+        else if (v > Const.FACE_SCORE) {
+            score = Const.FACE_SCORE;
             shortName = Const.SUITS_SHORT[s-1] + Const.VALUE_NAMES[v-1];
         }
         else {
