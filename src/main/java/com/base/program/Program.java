@@ -12,6 +12,12 @@ import java.util.List;
 
 public class Program {
 
+    /**
+     * mvn compile
+     * mvn exec:java -Dexec.mainClass=com.base.program.Program
+     * mvn exec:java -Dexec.mainClass=com.base.program.Program -Dexec.args=""
+     * mvn exec:java -Dexec.mainClass=com.base.program.Program -Dexec.args="cardFile_test.txt"
+     */
     public static void main(String[] args) throws IOException {
 
         String winner = "";
@@ -20,15 +26,14 @@ public class Program {
         List<Card> handDealer = new ArrayList<>();
 
         /**
-         * TODO: CLI navn på fil.
-         *
          * TODO: JavaDoc
          */
 
-        System.out.println(args[0]);
-
-        // ANTAGELSE: "taking the reference to the file" = referanse til navn på fil i resources og ikke path
-        String fileName = "cardFile_test.txt";
+        // ANTAGELSE: "taking the reference to the file" = referanse til navn på fil i resources og ikke path.
+        String fileName = "";
+        if (args != null && args.length > 0) {
+            fileName = args[0];
+        }
 
         Deck deck;
         if (fileName.length() > 0) {
@@ -113,24 +118,6 @@ public class Program {
         }
 
         Print.printEndOfGame(winner, handSam, handDealer);
-
-        System.out.println("\n"+Calculations.getScore(handSam));
-        System.out.println(Calculations.getScore(handDealer));
-
-        /**
-         * Start
-         *
-         * Q: hva heter fil?    ANTAGELSE: READ FILE BY TAKING REFERENCE = NAMED REFERENCE, NOT PATH
-         *
-         *      Navn: hent fil i resources/navn med 52 kort, bestemt deck
-         *      Blank: Opprett shuffled deck med 52 unike kort
-         *
-         * Standard:    Opprett spiller sam
-         *              Opprett dealer dealer
-         *
-
-         */
-
     }
 
 }

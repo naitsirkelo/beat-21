@@ -18,5 +18,6 @@ public class Print {
         System.out.print(winner);
         System.out.print("\n" + Const.SAM + ": ");     Print.printHand(handSam);
         System.out.print("\n" + Const.DEALER + ": ");  Print.printHand(handDealer);
+        System.out.println("\n");
     }
 }
