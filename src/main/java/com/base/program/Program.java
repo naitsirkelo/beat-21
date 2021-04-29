@@ -17,6 +17,8 @@ public class Program {
      * mvn exec:java -Dexec.mainClass=com.base.program.Program
      * mvn exec:java -Dexec.mainClass=com.base.program.Program -Dexec.args=""
      * mvn exec:java -Dexec.mainClass=com.base.program.Program -Dexec.args="cardFile_test.txt"
+     *
+     * mvn test
      */
     public static void main(String[] args) throws IOException {
 
@@ -50,7 +52,6 @@ public class Program {
 
             } else {
                 handDealer.add(deck.pop());
-
             }
         }
 

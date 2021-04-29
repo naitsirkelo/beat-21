@@ -5,9 +5,6 @@ import com.base.util.Const;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -15,7 +12,7 @@ import java.util.Scanner;
 
 public class Deck {
 
-    private List<Card> cards = new ArrayList<>();
+    private final List<Card> cards = new ArrayList<>();
 
     public Deck() {
 
@@ -32,15 +29,8 @@ public class Deck {
     public Deck(String fileName) throws IOException {
 
         Scanner inFile = new Scanner(new File(Const.RESOURCE_PATH + fileName));
-        String cardString = "";
 
-        while (inFile.hasNextLine()) {      // ANTAGELSE: Input skrives på én linje i tekstfil.
-            cardString = inFile.nextLine();
-        }
-        inFile.close();
-
-        cardString = cardString.replaceAll("\\s", "");
-        String[] input = cardString.split(",");
+        String[] input = readCardInputFromFile(inFile);
 
         // Legger til kort bakfra for å få riktig rekkefølge.
         for (int i = input.length-1; i >= 0; i--) {
@@ -73,6 +63,22 @@ public class Deck {
         cards.remove(cards.size() - 1);
 
         return top;
+    }
+
+    public static String[] readCardInputFromFile(Scanner inFile) {
+        String cardString = "";
+
+        while (inFile.hasNextLine()) {      // ANTAGELSE: Input skrives på én linje i tekstfil.
+            cardString = inFile.nextLine();
+        }
+        inFile.close();
+
+        cardString = cardString.replaceAll("\\s", "");
+        return cardString.split(",");
+    }
+
+    public List<Card> getCards() {
+        return cards;
     }
 
 }
