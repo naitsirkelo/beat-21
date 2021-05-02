@@ -26,7 +26,7 @@ public class Program {
      */
     public static void main(String[] args) throws IOException {
 
-        String winner = "";
+        String winner;
         String fileName;
         String filePath;
 
@@ -34,7 +34,7 @@ public class Program {
         List<Card> handDealer = new ArrayList<>();
 
         Deck deck = null;
-        
+
         if (args != null && args.length == 2) {
 
             if (args[0].equals(FILE)) {
@@ -68,66 +68,66 @@ public class Program {
             // Sjekker om begge har 22 (A + A) - Dealer vinner.
             if (scoreSam == Const.BUSTED_SCORE && scoreDealer == Const.BUSTED_SCORE) {
                 winner = Const.DEALER;
-            }
-
-            // Begge har Blackjack - Sam vinner.
-            if (scoreSam == Const.BLACKJACK && scoreDealer == Const.BLACKJACK) {
-                winner = Const.SAM;
-
-            } else if (scoreSam == Const.BLACKJACK) {
-                winner = Const.SAM;
-
-            } else if (scoreDealer == Const.BLACKJACK) {
-                winner = Const.DEALER;
-            }
-
-            // Sam kan trekke kort sålenge total verdi av kort er < 17.
-            while (Calculations.canDrawCard(handSam)) {
-                handSam.add(deck.pop());
-            }
-
-            if (Calculations.getScore(handSam) == Const.BLACKJACK) {    // Sam har nøyaktig 21 - vinner.
-
-                winner = Const.SAM;
-
-            } else if (Calculations.getScore(handSam) >= Const.BUSTED_SCORE) {  // Sam har over 21 - taper.
-
-                winner = Const.DEALER;
 
             } else {
 
-                // Dealer kan trekke kort sålenge de har total verdi av kort mindre enn Sam sin totale verdi.
-                while (Calculations.getScore(handDealer) < Calculations.getScore(handSam)) {
-                    handDealer.add(deck.pop());
-                }
-
-                if (Calculations.getScore(handDealer) == Const.BLACKJACK) { // Dealer har nøyaktig 21 - vinner.
-
-                    winner = Const.DEALER;
-
-                } else if (Calculations.getScore(handDealer) >= Const.BUSTED_SCORE) { // Dealer har over 21 - taper.
-
+                // Begge har Blackjack - Sam vinner.
+                if (scoreSam == Const.BLACKJACK && scoreDealer == Const.BLACKJACK) {
                     winner = Const.SAM;
 
-                }
+                } else if (scoreSam == Const.BLACKJACK) {
+                    winner = Const.SAM;
 
-                scoreSam = Calculations.getScore(handSam);
-                scoreDealer = Calculations.getScore(handDealer);
+                } else if (scoreDealer == Const.BLACKJACK) {
+                    winner = Const.DEALER;
 
-                // ANTAGELSE: Lik sum til slutt ender i uavgjort.
-                if (scoreSam == scoreDealer) {
-                    winner = "draw";
+                } else {    // Ingen har Blackjack
 
-                } else if (scoreSam < Const.BLACKJACK && scoreDealer < Const.BLACKJACK) {
-                    // Når ingen kan trekke flere kort kåres vinner med høyeste sum <= 21.
-                    winner = Calculations.getScore((handSam)) > Calculations.getScore(handDealer) ? Const.SAM : Const.DEALER;
+                    // Sam kan trekke kort sålenge total verdi av kort er < 17.
+                    while (Calculations.canDrawCard(handSam)) {
+                        handSam.add(deck.pop());
+                    }
+                    scoreSam = Calculations.getScore(handSam);
+
+                    if (scoreSam == Const.BLACKJACK) {    // Sam har nøyaktig 21 - vinner.
+                        winner = Const.SAM;
+
+                    } else if (scoreSam >= Const.BUSTED_SCORE) {  // Sam har over 21 - taper.
+                        winner = Const.DEALER;
+
+                    } else {
+
+                        // Dealer kan trekke kort sålenge de har total kortverdi mindre enn Sam sin verdi.
+                        while (Calculations.getScore(handDealer) < scoreSam) {
+                            handDealer.add(deck.pop());
+                        }
+                        scoreDealer = Calculations.getScore(handDealer);
+
+                        if (scoreDealer == Const.BLACKJACK) { // Dealer har nøyaktig 21 - vinner.
+                            winner = Const.DEALER;
+
+                        } else if (scoreDealer >= Const.BUSTED_SCORE) { // Dealer har over 21 - taper.
+                            winner = Const.SAM;
+
+                        } else {
+
+                            // ANTAGELSE: Lik sum til slutt ender i uavgjort.
+                            if (scoreSam == scoreDealer) {
+                                winner = "draw";
+
+                            } else {
+                                // Når ingen kan trekke flere kort kåres vinner med høyeste sum < 21.
+                                winner = scoreSam > scoreDealer ? Const.SAM : Const.DEALER;
+                            }
+                        }
+                    }
                 }
             }
 
             Print.printEndOfGame(winner, handSam, handDealer);
 
         } else {
-            System.out.println("Invalid Deck"); // Required: debug logger.
+            System.out.println("Deck error."); // Required: Debug logger.
         }
     }
 }

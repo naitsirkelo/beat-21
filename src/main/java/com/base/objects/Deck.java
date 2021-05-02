@@ -6,6 +6,7 @@ import com.base.util.Const;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.logging.Logger;
 
 import static com.base.util.Const.FILE;
 import static com.base.util.Const.PATH;
@@ -14,6 +15,9 @@ public class Deck {
 
     private final List<Card> cards = new ArrayList<>();
 
+    /**
+     * Default Deck constructor, populating List of Card objects and shuffling order.
+     */
     public Deck() {
 
         for (int i = 1; i <= Const.SUITS; i++) {
@@ -27,10 +31,10 @@ public class Deck {
     }
 
     /**
-     *
+     * Deck constructor with file name/path, populating List of Card objects.
      * @param fileInput file name or absolute path.
-     * @param type
-     * @throws IOException
+     * @param type String determining whether to check for file name or absolute path.
+     * @throws IOException to be caught on file read.
      */
     public Deck(String fileInput, String type) throws IOException {
 
@@ -47,21 +51,26 @@ public class Deck {
                 break;
         }
 
-        String[] input = readCardInputFromFile(inFile);
+        if (inFile != null) {
+            String[] input = readCardInputFromFile(inFile);
 
-        // Legger til kort bakfra for å få riktig rekkefølge.
-        for (int i = input.length-1; i >= 0; i--) {
+            // Legger til kort bakfra for å få riktig rekkefølge.
+            for (int i = input.length - 1; i >= 0; i--) {
 
-            String cardInput = input[i];
+                String cardInput = input[i];
 
-            String suit = cardInput.substring(0, 1);
-            String value = cardInput.substring(1);
+                String suit = cardInput.substring(0, 1);
+                String value = cardInput.substring(1);
 
-            if (Calculations.isInteger(value)) {
-                cards.add(new Card(Integer.parseInt(value), Const.SUIT_VALUES.get(suit)));
-            } else {
-                cards.add(new Card(Const.CARD_VALUES.get(value), Const.SUIT_VALUES.get(suit)));
+                if (Calculations.isInteger(value)) {
+                    cards.add(new Card(Integer.parseInt(value), Const.SUIT_VALUES.get(suit)));
+                } else {
+                    cards.add(new Card(Const.CARD_VALUES.get(value), Const.SUIT_VALUES.get(suit)));
+                }
             }
+
+        } else {
+            System.out.println("File read error."); // Required: Debug logger.
         }
     }
 
@@ -92,12 +101,6 @@ public class Deck {
 
         cardString = cardString.replaceAll("\\s", "");
         return cardString.split(",");
-    }
-
-    public boolean isValid() {
-
-
-        return false;
     }
 
     public List<Card> getCards() {

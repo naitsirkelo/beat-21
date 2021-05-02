@@ -8,6 +8,11 @@ public class Card {
 
     private final String shortName;
 
+    /**
+     * Creating new unique card, given it's value and suit. Value = score, except Ace = 11 and face = 10.
+     * @param v Value, 1-13
+     * @param s Suit, 1-4
+     */
     public Card(int v, int s) {
 
         if (v == Const.ACE) {

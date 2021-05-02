@@ -28,7 +28,7 @@ public class TestHand {
     }
 
     /**
-     * Checks that the correct total score is returned based on the already fille hand of cards.
+     * Checks that the correct total score is returned based on the already filled hand of cards.
      */
     @Test
     public void testTotalScoreOfHand() {
