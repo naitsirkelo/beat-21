@@ -5,10 +5,10 @@ import com.base.util.Const;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+
+import static com.base.util.Const.FILE;
+import static com.base.util.Const.PATH;
 
 public class Deck {
 
@@ -26,9 +26,26 @@ public class Deck {
         Collections.shuffle(cards);
     }
 
-    public Deck(String fileName) throws IOException {
+    /**
+     *
+     * @param fileInput file name or absolute path.
+     * @param type
+     * @throws IOException
+     */
+    public Deck(String fileInput, String type) throws IOException {
 
-        Scanner inFile = new Scanner(new File(Const.RESOURCE_PATH + fileName));
+        Scanner inFile = null;
+        switch (type) {
+            case FILE:
+                File inputFile = new File(Objects.requireNonNull(getClass().getClassLoader().getResource(fileInput)).getFile());
+                inFile = new Scanner(inputFile);
+                break;
+            case PATH:
+                inFile = new Scanner(new File(fileInput));
+                break;
+            default:
+                break;
+        }
 
         String[] input = readCardInputFromFile(inFile);
 
@@ -75,6 +92,12 @@ public class Deck {
 
         cardString = cardString.replaceAll("\\s", "");
         return cardString.split(",");
+    }
+
+    public boolean isValid() {
+
+
+        return false;
     }
 
     public List<Card> getCards() {

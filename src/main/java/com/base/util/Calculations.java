@@ -6,6 +6,11 @@ import java.util.List;
 
 public class Calculations {
 
+    /**
+     * Counts total value of cards in given hand.
+     * @param hand List of Cards objects
+     * @return integer sum
+     */
     public static int getScore(List<Card> hand) {
 
         int score = 0;
@@ -17,11 +22,21 @@ public class Calculations {
         return score;
     }
 
+    /**
+     * Checks if player can draw new card given their card sum.
+     * @param hand List of Cards objects to be totalled.
+     * @return true/false
+     */
     public static boolean canDrawCard(List<Card> hand) {
 
         return (getScore(hand) < Const.MAX_SCORE_NEW_CARD);
     }
 
+    /**
+     * Checks if string input can be converted to a valid integer.
+     * @param str String to be checked.
+     * @return true/false
+     */
     public static boolean isInteger(String str) {
         if (str == null) {
             return false;

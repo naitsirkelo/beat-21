@@ -6,7 +6,9 @@ public class Const {
 
     public static final String SAM = "sam";
     public static final String DEALER = "dealer";
-    public static final String RESOURCE_PATH = "C:\\Users\\Greencom\\Prog\\can-you-beat-the-dealer-at-21\\src\\main\\resources\\";
+    public static final String TEST_FILE_NAME = "cardFile_test.txt";
+    public static final String FILE = "file";
+    public static final String PATH = "path";
 
     public static final int BLACKJACK = 21;
     public static final int BUSTED_SCORE = 22;
